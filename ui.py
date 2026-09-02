@@ -1,4 +1,6 @@
 # ui.py
+# শুধু UI / Button design এবং button binding এখানে থাকবে।
+# Button-এর আসল কাজ actions.py-তে থাকবে।
 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
@@ -10,7 +12,7 @@ BLUE = (0.03, 0.25, 0.85, 1)
 WHITE = (1, 1, 1, 1)
 
 
-def create_ui():
+def create_ui(actions=None):
 
     main = BoxLayout(
         orientation="vertical",
@@ -61,6 +63,27 @@ def create_ui():
         background_color=RED
     )
 
+    # =========================
+    # TOP BUTTON ACTIONS
+    # =========================
+
+    if actions is not None:
+        gen.bind(
+            on_release=lambda x: actions.gen()
+        )
+
+        twofa.bind(
+            on_release=lambda x: actions.twofa()
+        )
+
+        uid.bind(
+            on_release=lambda x: actions.uid()
+        )
+
+        cookie.bind(
+            on_release=lambda x: actions.cookie()
+        )
+
     top.add_widget(gen)
     top.add_widget(twofa)
     top.add_widget(uid)
@@ -101,9 +124,30 @@ def create_ui():
         background_color=BLUE
     )
 
+    # =========================
+    # BOTTOM BUTTON ACTIONS
+    # =========================
+
+    if actions is not None:
+        set_button.bind(
+            on_release=lambda x: actions.settings()
+        )
+
+        home.bind(
+            on_release=lambda x: actions.home()
+        )
+
+        exit_button.bind(
+            on_release=lambda x: actions.exit()
+        )
+
     bottom.add_widget(set_button)
     bottom.add_widget(home)
     bottom.add_widget(exit_button)
+
+    # =========================
+    # ADD TO MAIN LAYOUT
+    # =========================
 
     main.add_widget(top)
     main.add_widget(bottom)
